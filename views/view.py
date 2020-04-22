@@ -1,17 +1,17 @@
-from core.base import bot
+from __future__ import annotations
+from typing import Any
+from core.decorator import view
 from core.view import View
 from utils.state import State
 
 
-@bot.view(state=State.START)
-class First(View):
+@view(state=State.START)
+class StartView(View):
 
-    @bot.message(regex="Начать")
-    def func(self, event):
+    @view.message(regex="[Н,н]ачать")
+    def func(self, event: Any) -> None:
+        self.api.send_message(self.user.id, "Привет")
 
-        self.api.send_message(self.user.id, "Начать")
-
-    @bot.message(regex="Назад")
-    def func(self, event):
-        self.api.send_message(self.user.id, "Назад")
-
+    @view.message(regex="[П,п]ока")
+    def fun(self, event: Any) -> None:
+        self.api.send_message(self.user.id, "Пока")

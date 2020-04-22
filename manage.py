@@ -1,19 +1,15 @@
-from core.database.migration import migrate
-from core.main import main as bot_run
 import sys
+from core.manage.migrate import MigrateCommand
+from core.manage.run import RunCommand
 
 
 def main():
-    try:
-        command = sys.argv[1]
-        if command == "run":
-            bot_run()
-        elif command == "migrate":
-            migrate()
-        else:
-            print("don't know")
-    except IndexError:
-        print("please add command")
+    if len(sys.argv) <= 1:
+        raise Exception("add command")
+    run = RunCommand()
+    migrate = MigrateCommand()
+    run.set_next(migrate)
+    run.handle(sys.argv[1])
 
 
 if __name__ == '__main__':

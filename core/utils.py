@@ -2,12 +2,12 @@ import os
 import glob
 import sys
 import importlib.util
-from core.const import _BASE_DIR
+from settings import BASE_DIR
 
 
 class Utils:
-    _path_views = os.path.join(_BASE_DIR, "views")
-    _path_models = os.path.join(_BASE_DIR, "models")
+    _path_views = os.path.join(BASE_DIR, "views")
+    _path_models = os.path.join(BASE_DIR, "models")
 
     @staticmethod
     def load_views():
@@ -20,7 +20,7 @@ class Utils:
     @staticmethod
     def load_models():
         for i, x, y in os.walk(Utils._path_models):
-            for path in glob.glob(f"{i}/*[M, m]odel.py"):
+            for path in glob.glob(f"{i}/*.py"):
                 file = importlib.util.spec_from_file_location("models", path)
                 module = importlib.util.module_from_spec(file)
                 file.loader.exec_module(module)
@@ -28,22 +28,22 @@ class Utils:
     @staticmethod
     def load_settings():
         for i, x, y in os.walk(Utils._path_models):
-            for path in glob.glob(f"{i}/*[M, m]odel.py"):
+            for path in glob.glob(f"{i}/*.py"):
                 file = importlib.util.spec_from_file_location("models", path)
                 module = importlib.util.module_from_spec(file)
                 file.loader.exec_module(module)
 
 
 def user_model(cls):
-    from core.const import _USER_MODEL
-    global USER_MODEL
-    USER_MODEL = cls
-
+    # from core.const import _USER_MODEL
+    # global USER_MODEL
+    # USER_MODEL = cls
+    ...
 
 def model(cls):
-    from core.const import _MODEL_FOR_MIGRATE
-    global MODEL_FOR_MIGRATE
-    _MODEL_FOR_MIGRATE.append(cls)
-
+    # from core.const import _MODEL_FOR_MIGRATE
+    # global MODEL_FOR_MIGRATE
+    # _MODEL_FOR_MIGRATE.append(cls)
+    ...
 
 

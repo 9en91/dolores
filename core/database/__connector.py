@@ -1,3 +1,6 @@
+from settings import DATABASE
+
+
 class DatabaseConnector:
     @classmethod
     def __new__(cls, *args, **kwargs):
@@ -6,7 +9,6 @@ class DatabaseConnector:
         return cls.instance
 
     def __init__(self):
-        from settings import DATABASE
         self.__connect = DATABASE["DRIVER"](**DATABASE["CONFIG"])
 
     @staticmethod
