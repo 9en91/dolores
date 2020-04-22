@@ -10,6 +10,6 @@ class RunCommand(AbstractCommand):
         if request == "run":
             print("RUN")
             bot = Application()
-            # bot.polling()
+            bot.polling()
         else:
             super().handle(request)

@@ -5,7 +5,7 @@ from core.database.model import Model
 from core.utils import user_model, model
 
 
-@user_model
+# @user_model
 class UserModel(DefaultUserModel):
     pass
 

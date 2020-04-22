@@ -1,10 +1,11 @@
-from core.const import _MODEL_FOR_MIGRATE, _USER_MODEL
+from core.const import _MODEL_FOR_MIGRATE
 from core.database.__connector import DatabaseConnector
+from core.database.default import DefaultUserModel
 
 
 def migrate():
     print("Start migration:")
-    _MODEL_FOR_MIGRATE.append(_USER_MODEL)
+    _MODEL_FOR_MIGRATE.append(DefaultUserModel)
     connect = DatabaseConnector.get_connection()
     connect.connect()
     connect.drop_tables(_MODEL_FOR_MIGRATE, cascade=True)

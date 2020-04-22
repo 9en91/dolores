@@ -6,14 +6,10 @@ from core.api.api import VkAPI
 
 class View(metaclass=ABCMeta):
 
-    state = None
-    text = None
     api = VkAPI()
+    user = None
 
-    _user = None
-    _is_new_user = None
-
-    @property
-    def user(self):
-        return self._user
+    def __init__(self, event, user):
+        self.event = event
+        self.user = user
 
