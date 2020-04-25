@@ -6,6 +6,7 @@ from typing import Callable, List
 class ViewContainer:
 
     __cls = None
+    __state = None
     __mcl: List[MessageContainer] = None
 
     @property
@@ -15,6 +16,18 @@ class ViewContainer:
     @cls.setter
     def cls(self, value):
         self.__cls = value
+
+    @property
+    def state(self):
+        return self.__state
+
+    @state.setter
+    def state(self, value):
+        self.__state = value
+
+
+
+
 
     @property
     def mcl(self):
