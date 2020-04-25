@@ -9,12 +9,13 @@ class StartViewSet(ViewSet):
 
     @MessageHandler(regex="[Н,н]ачать")
     def start(self, event: Message) -> None:
-        self.api.send_message(self.user, "Ой, ты что-то начал")
+        self.api.messages.send(self.user.id, "Ой, ты что-то начал")
 
     @MessageHandler(regex="[П,п]ривет")
     def hi(self, event: Message) -> None:
-        self.api.send_message(self.user, "Привет")
+        self.api.messages.send(self.user.id, "Привет")
 
     @MessageHandler
     def bye(self, event: Message) -> None:
-        self.api.send_message(self.user, "Ну пока")
+        self.api.messages.send(user_id=self.user.id,
+                               message="Не понимаю")

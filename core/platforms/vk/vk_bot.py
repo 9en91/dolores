@@ -1,4 +1,6 @@
 import re
+from typing import final
+
 from vk_api import VkApi
 from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
 from vk_api.vk_api import VkApiMethod
@@ -10,6 +12,7 @@ from core.api.messages import MessagesMixin
 from tools.state import State
 
 
+@final
 class VkBot(VkBotLongPoll,
             MessagesMixin):
 

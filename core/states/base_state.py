@@ -1,16 +1,21 @@
-from enum import IntEnum, auto, EnumMeta
+from __future__ import annotations
+from enum import IntEnum, auto, EnumMeta, unique
+from typing import final
 
 
+@final
 class state(int, auto):
     pass
 
 
+@unique
 class _BaseState(IntEnum):
     START = state()
 
 
+@final
 class MetaState(EnumMeta):
-    START = ...
+    START: BaseState
     __BASE = IntEnum
 
     @classmethod

@@ -1,20 +1,11 @@
 import re
 from types import FunctionType
-from typing import Pattern, Callable, Union
-from functools import wraps
+from typing import Pattern, Callable, Union, final
 from core.platforms.vk.vk_bot import VkBot
 from core.types._view_container import _ViewContainer, _MessageContainer
 
 
-# def MessageHandler(regex: str = "[*]"):
-#     @wraps(regex)
-#     def wrapper(method):
-#         handler = _MessageContainer()
-#         handler.method = method
-#         handler.regex = re.compile(regex)
-#         return handler
-#     return wrapper
-
+@final
 class MessageHandler:
 
     def __new__(cls, regex: Union[FunctionType, str]):
@@ -30,6 +21,7 @@ class MessageHandler:
         return _MessageContainer(self.regex, method, False)
 
 
+@final
 class ViewHandler:
 
     def __init__(self, state):

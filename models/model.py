@@ -1,6 +1,5 @@
-from core.states import BaseState, state
-from core.database.model import Model
-from core.decorators.model import Entity
+from core.database import Model
+from core.decorators import Entity
 from core.database import fields
 
 

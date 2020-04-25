@@ -1,5 +1,10 @@
+from typing import final
+
+
+@final
 class Entity:
 
+    @final
     class User:
         _using = 0
 

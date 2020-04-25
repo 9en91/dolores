@@ -1,6 +1,9 @@
+from typing import final
+
 from settings import DATABASE
 
 
+@final
 class DatabaseConnector:
     @classmethod
     def __new__(cls, *args, **kwargs):

@@ -1,5 +1,16 @@
-from abc import abstractmethod
-from core.manage.command import Command
+from __future__ import annotations
+from abc import abstractmethod, ABCMeta
+
+
+class Command(metaclass=ABCMeta):
+
+    @abstractmethod
+    def set_next(self, handler: Command) -> Command:
+        pass
+
+    @abstractmethod
+    def handle(self, request) -> None:
+        pass
 
 
 class AbstractCommand(Command):

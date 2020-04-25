@@ -1,40 +1,16 @@
 from __future__ import annotations
-
-import re
 from dataclasses import dataclass
 from types import FunctionType
-from typing import List, Pattern, Union
+from typing import List, Pattern, Union, Type
+from core.states import BaseState
+from core.views import ViewSet
 
 
+@dataclass
 class _ViewContainer:
-
-    __cls = None
-    __state = None
-    __mcl: List[_MessageContainer] = None
-
-    @property
-    def cls(self):
-        return self.__cls
-
-    @cls.setter
-    def cls(self, value):
-        self.__cls = value
-
-    @property
-    def state(self):
-        return self.__state
-
-    @state.setter
-    def state(self, value):
-        self.__state = value
-
-    @property
-    def mcl(self):
-        return self.__mcl
-
-    @mcl.setter
-    def mcl(self, value):
-        self.__mcl = value
+    cls: Type[ViewSet] = None
+    state: BaseState = None
+    mcl: List[_MessageContainer] = None
 
 
 @dataclass

@@ -1,10 +1,14 @@
+from __future__ import annotations
 from abc import ABCMeta
-from core.api.api import VkAPI
+from typing import Final
+
+from core.api import get_active_api
 
 
 class ViewSet(metaclass=ABCMeta):
 
-    api = VkAPI()
-    user = None
+    def __init__(self):
+        self.api: Final = get_active_api()
+        self.user = None
 
 
