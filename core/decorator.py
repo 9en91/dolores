@@ -1,28 +1,49 @@
+import re
+from typing import Dict
+
 from core.base import Application
-from core.types._param_handler import _Handler # noqa
+from core.types._param_handler import ViewContainer, MessageContainer
 
 
-class view: # noqa
-    class message: # noqa
+class Message:  # noqa
 
-        def __init__(self, regex):
-            self.regex = regex
+    def __init__(self, regex):
+        self.regex = regex
 
-        def __call__(self, method):
-            return _Handler(self.regex, method)
+    def __call__(self, method):
+        handler = MessageContainer()
+        handler.method = method
+        handler.regex = self.regex
+        return handler
+        # return {method.__name__: handler}
+
+class View: # noqa
 
     def __init__(self, state):
         self.state = state
 
-    def __call__(self, cls):
-        cls.state = self.state
-        self.__create(cls)
-        return cls
+    def _build_message_handler(self, cls, name):
+        handler_message = MessageContainer()
+        handler_message.method = name
+        handler_message.regex = re.compile(cls.__dict__[name].regex)
+        return handler_message
 
-    def __create(self, cls):  # noqa
-        for i in cls.__dict__.keys():
-            if isinstance(cls.__dict__[i], _Handler):
-                if cls.state in Application._handlers: # noqa
-                    Application._handlers[cls.state].append(cls.__dict__[i]) # noqa
-                else:
-                    Application._handlers[cls.state] = [cls.__dict__[i]] # noqa
+    def _rollback_method(self, cls, name):
+        setattr(cls, name, cls.__dict__[name].method)
+
+    def __call__(self, cls):
+        # init cls
+        cls.state = self.state
+        # init handler
+        handler = ViewContainer()
+        handler.state = self.state
+        instance_handler = cls()
+        handler.cls = instance_handler
+        handler.mcl = []
+        for name in cls.__dict__.keys():
+            if isinstance(cls.__dict__[name], MessageContainer):
+                handler_message = self._build_message_handler(cls, name)
+                handler.mcl.append(handler_message)
+                self._rollback_method(cls, name)
+        Application._handlers[self.state] = handler
+        return cls

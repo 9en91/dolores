@@ -1,17 +1,17 @@
 from __future__ import annotations
 from typing import Any
-from core.decorator import view
-from core.view import View
+from core.decorator import View, Message
+from core.viewset import ViewSet
 from utils.state import State
 
 
-@view(state=State.START)
-class StartView(View):
+@View(state=State.START)
+class StartViewSet(ViewSet):
 
-    @view.message(regex="[Н,н]ачать")
+    @Message(regex="[Н,н]ачать")
     def func(self, event: Any) -> None:
-        self.api.send_message(self.user.id, "Привет")
+        self.api.send_message(self.user, "Привет")
 
-    @view.message(regex="[П,п]ока")
+    @Message(regex="[П,п]ока")
     def fun(self, event: Any) -> None:
-        self.api.send_message(self.user.id, "Пока")
+        self.api.send_message(self.user, "Пока")
