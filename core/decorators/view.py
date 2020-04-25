@@ -1,20 +1,33 @@
 import re
-from typing import Pattern, Callable
-
+from types import FunctionType
+from typing import Pattern, Callable, Union
+from functools import wraps
 from core.platforms.vk.vk_bot import VkBot
 from core.types._view_container import _ViewContainer, _MessageContainer
 
 
+# def MessageHandler(regex: str = "[*]"):
+#     @wraps(regex)
+#     def wrapper(method):
+#         handler = _MessageContainer()
+#         handler.method = method
+#         handler.regex = re.compile(regex)
+#         return handler
+#     return wrapper
+
 class MessageHandler:
 
-    def __init__(self, regex: str):
+    def __new__(cls, regex: Union[FunctionType, str]):
+        if not isinstance(regex, FunctionType):
+            return super(MessageHandler, cls).__new__(cls)
+        else:
+            return _MessageContainer(re.compile(".*"), regex, True)
+
+    def __init__(self, *, regex: str = ".*"):
         self.regex: Pattern = re.compile(regex)
 
     def __call__(self, method: Callable):
-        handler = _MessageContainer()
-        handler.method = method
-        handler.regex = self.regex
-        return handler
+        return _MessageContainer(self.regex, method, False)
 
 
 class ViewHandler:
@@ -23,9 +36,7 @@ class ViewHandler:
         self.state = state
 
     def _build_message_handler(self, cls, name: str) -> _MessageContainer:
-        handler_message = _MessageContainer()
-        handler_message.method = name
-        handler_message.regex = cls.__dict__[name].regex
+        handler_message = _MessageContainer(cls.__dict__[name].regex, name, cls.__dict__[name].all)
         return handler_message
 
     def _build_view_handler(self, cls) -> _ViewContainer:
@@ -49,5 +60,6 @@ class ViewHandler:
                 handler_message = self._build_message_handler(cls, name)
                 handler_view.mcl.append(handler_message)
                 self._rollback_method(cls, name)
+        handler_view.mcl = sorted(handler_view.mcl, key=lambda x: x.all)
         VkBot._handlers[self.state] = handler_view
         return cls

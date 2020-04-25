@@ -1,5 +1,9 @@
 from __future__ import annotations
-from typing import List
+
+import re
+from dataclasses import dataclass
+from types import FunctionType
+from typing import List, Pattern, Union
 
 
 class _ViewContainer:
@@ -33,22 +37,14 @@ class _ViewContainer:
         self.__mcl = value
 
 
+@dataclass
 class _MessageContainer:
-    __regex = None
-    __method = None
+    regex: Pattern
+    method: Union[FunctionType, str]
+    all: bool = False
 
-    @property
-    def regex(self):
-        return self.__regex
+    @classmethod
+    def build(cls, other: _MessageContainer):
+        return cls(other.regex, other.method, other.all)
 
-    @regex.setter
-    def regex(self, value):
-        self.__regex = value
 
-    @property
-    def method(self):
-        return self.__method
-
-    @method.setter
-    def method(self, value):
-        self.__method = value

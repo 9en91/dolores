@@ -40,4 +40,4 @@ class VkBot(VkBotLongPoll,
                     if re.search(message_handler.regex, text):
                         view_handler.cls.user = user
                         view_handler.cls.__getattribute__(message_handler.method)(event)
-                        continue
+                        break

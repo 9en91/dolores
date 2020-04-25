@@ -11,10 +11,10 @@ class StartViewSet(ViewSet):
     def start(self, event: Message) -> None:
         self.api.send_message(self.user, "Ой, ты что-то начал")
 
-    @MessageHandler(regex="[П,п]ока")
-    def bye(self, event: Message) -> None:
-        self.api.send_message(self.user, "Ну пока")
-
     @MessageHandler(regex="[П,п]ривет")
     def hi(self, event: Message) -> None:
         self.api.send_message(self.user, "Привет")
+
+    @MessageHandler
+    def bye(self, event: Message) -> None:
+        self.api.send_message(self.user, "Ну пока")
