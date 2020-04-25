@@ -1,7 +1,7 @@
 import peewee
 
-from core.database.model import Model
-from core.basestate import BaseState
+from core.database import Model
+from core.states import BaseState
 
 
 class DefaultUserModel(Model):

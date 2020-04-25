@@ -1,4 +1,4 @@
-from core.basestate import state, BaseState
+from core.states import state, BaseState
 
 
 class State(BaseState):

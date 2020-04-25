@@ -1,7 +1,7 @@
-from core.basestate import BaseState, state
+from core.states import BaseState, state
 from core.database.model import Model
 from core.decorators.model import Entity
-from core.database.fields import field
+from core.database import fields
 
 
 @Entity.User
@@ -11,5 +11,5 @@ class UserModel(Model):
 
 @Entity
 class ChatModel(Model):
-    user = field.TextField()
+    user = fields.TextField()
 

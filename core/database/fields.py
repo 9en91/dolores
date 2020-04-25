@@ -1,3 +1,3 @@
-import peewee as field
+from peewee import *
 
 

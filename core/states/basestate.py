@@ -1,8 +1,6 @@
-from enum import IntEnum, auto, EnumMeta
+from enum import IntEnum, EnumMeta
 
-
-class state(int, auto): # noqa
-    pass
+from core.states import state
 
 
 class _BaseState(IntEnum):
@@ -27,9 +25,6 @@ class MetaState(EnumMeta):
     def __init__(cls, name, bases, namespace, **kwargs):
         super().__init__(name, (cls.__BASE,), namespace)
 
-
-class BaseState(metaclass=MetaState):
-    pass
 
 
 

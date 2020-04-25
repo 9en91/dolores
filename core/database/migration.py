@@ -1,4 +1,3 @@
-from core.const import _MODEL_FOR_MIGRATE
 from core.database.__connector import DatabaseConnector
 from core.database.default import DefaultUserModel
 
