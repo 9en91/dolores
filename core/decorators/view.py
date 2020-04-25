@@ -1,7 +1,7 @@
 import re
 from typing import Pattern, Callable
 
-from core.platforms.vk.vk_bot import Application
+from core.platforms.vk.vk_bot import VkBot
 from core.types._view_container import _ViewContainer, _MessageContainer
 
 
@@ -49,5 +49,5 @@ class ViewHandler:
                 handler_message = self._build_message_handler(cls, name)
                 handler_view.mcl.append(handler_message)
                 self._rollback_method(cls, name)
-        Application._handlers[self.state] = handler_view
+        VkBot._handlers[self.state] = handler_view
         return cls

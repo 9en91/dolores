@@ -8,9 +8,13 @@ from tools.state import State
 class StartViewSet(ViewSet):
 
     @MessageHandler(regex="[Н,н]ачать")
-    def func(self, event: Message) -> None:
-        self.api.send_message(self.user, "Привет")
+    def start(self, event: Message) -> None:
+        self.api.send_message(self.user, "Ой, ты что-то начал")
 
     @MessageHandler(regex="[П,п]ока")
-    def fun(self, event: Message) -> None:
-        self.api.send_message(self.user, "Пока")
+    def bye(self, event: Message) -> None:
+        self.api.send_message(self.user, "Ну пока")
+
+    @MessageHandler(regex="[П,п]ривет")
+    def hi(self, event: Message) -> None:
+        self.api.send_message(self.user, "Привет")
