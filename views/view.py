@@ -1,17 +1,16 @@
-from __future__ import annotations
-from typing import Any
-from core.decorator import View, Message
-from core.viewset import ViewSet
-from utils.state import State
+from core.decorators import ViewHandler, MessageHandler
+from core.types import Message
+from core.views import ViewSet
+from tools.state import State
 
 
-@View(state=State.START)
+@ViewHandler(state=State.START)
 class StartViewSet(ViewSet):
 
-    @Message(regex="[Н,н]ачать")
-    def func(self, event: Any) -> None:
+    @MessageHandler(regex="[Н,н]ачать")
+    def func(self, event: Message) -> None:
         self.api.send_message(self.user, "Привет")
 
-    @Message(regex="[П,п]ока")
-    def fun(self, event: Any) -> None:
+    @MessageHandler(regex="[П,п]ока")
+    def fun(self, event: Message) -> None:
         self.api.send_message(self.user, "Пока")

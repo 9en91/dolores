@@ -1,15 +1,15 @@
-import peewee
-
-from core.database.default import DefaultUserModel
+from core.basestate import BaseState, state
 from core.database.model import Model
-from core.utils import user_model, model
+from core.decorators.model import Entity
+from core.database.fields import field
 
 
-# @user_model
-class UserModel(DefaultUserModel):
+@Entity.User
+class UserModel(Model):
     pass
 
 
-@model
+@Entity
 class ChatModel(Model):
-    user = peewee.TextField()
+    user = field.TextField()
+

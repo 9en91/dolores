@@ -1,13 +1,12 @@
 from __future__ import annotations
-from dataclasses import dataclass
-from typing import Callable, List
+from typing import List
 
 
-class ViewContainer:
+class _ViewContainer:
 
     __cls = None
     __state = None
-    __mcl: List[MessageContainer] = None
+    __mcl: List[_MessageContainer] = None
 
     @property
     def cls(self):
@@ -25,10 +24,6 @@ class ViewContainer:
     def state(self, value):
         self.__state = value
 
-
-
-
-
     @property
     def mcl(self):
         return self.__mcl
@@ -37,11 +32,8 @@ class ViewContainer:
     def mcl(self, value):
         self.__mcl = value
 
-    def __repr__(self):
-        return f"{self.__class__.__name__}: {self.__cls} [{self.__mcl}]"
 
-
-class MessageContainer:
+class _MessageContainer:
     __regex = None
     __method = None
 
@@ -60,8 +52,3 @@ class MessageContainer:
     @method.setter
     def method(self, value):
         self.__method = value
-
-    def __repr__(self):
-        return f"{self.__class__.__name__}: {self.__regex} [{self.__method}]"
-
-

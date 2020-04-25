@@ -1,18 +1,18 @@
 import re
-from typing import List, Optional, Dict
 from vk_api import VkApi
-from vk_api.bot_longpoll import VkBotLongPoll, VkBotMessageEvent, VkBotEventType
+from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
 from vk_api.vk_api import VkApiMethod
-
 from core.database.default import DefaultUserModel
-from core.types._param_handler import ViewContainer, MessageContainer
-from core.utils import Utils
+from core.types._view_container import _ViewContainer, _MessageContainer
+from core.utils._loader import _Loader
 from settings import TOKEN, ID_BOT
 from core.api.messages import MessagesMixin
-from utils.state import State
+from tools.state import State
 
 
-class Application(VkBotLongPoll, MessagesMixin):
+class VkBot(VkBotLongPoll,
+            MessagesMixin):
+
     vk = VkApi(token=TOKEN)
     api: VkApiMethod = vk.get_api()
     _handlers = {}
@@ -20,8 +20,7 @@ class Application(VkBotLongPoll, MessagesMixin):
     def __init__(self):
         print("starting...")
         super().__init__(self.vk, ID_BOT)
-        Utils.load_views()
-        print()
+        _Loader.load_views()
 
     def _init_user(self, event) -> DefaultUserModel:
         user, created = DefaultUserModel.get_or_create(id=event.message.from_id)
@@ -35,11 +34,9 @@ class Application(VkBotLongPoll, MessagesMixin):
             text = event.message.text
             state = State(user.state)
             if state in self._handlers:
-                view_handler: ViewContainer = self._handlers[state]
-                message_handler: MessageContainer
+                view_handler: _ViewContainer = self._handlers[state]
+                message_handler: _MessageContainer
                 for message_handler in view_handler.mcl:
                     if re.search(message_handler.regex, text):
                         view_handler.cls.user = user
                         view_handler.cls.__getattribute__(message_handler.method)(event)
-
-bot = Application
