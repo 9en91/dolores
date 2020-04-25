@@ -1,3 +1,1 @@
-from core import ViewSet
-
-ViewSet = ViewSet
+from core.views.view_set import ViewSet

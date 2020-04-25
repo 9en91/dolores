@@ -1,3 +1,2 @@
-from core.database import Model
+from core.database.model import Model
 
-Model = Model
