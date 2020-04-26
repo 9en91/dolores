@@ -7,7 +7,7 @@ from core.utils.load_token import get_bot_token
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 PLATFORM = PLATFORMS.VK
-TOKEN = get_bot_token()
+TOKEN = get_bot_token(BASE_DIR)
 ID_BOT = 188183065
 
 DATABASE = {
@@ -20,3 +20,5 @@ DATABASE = {
     },
     "DRIVER": PostgresqlDatabase
 }
+
+STATE = "tools.state.State"

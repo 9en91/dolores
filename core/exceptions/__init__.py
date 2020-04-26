@@ -10,6 +10,13 @@ class SoonPlatformException(PlatformExceptions):
     pass
 
 
+class StateException(Exception):
+    pass
+
+class TooManyStateClasses(StateException):
+    pass
+
+
 class ModelsExceptions(Exception):
     pass
 

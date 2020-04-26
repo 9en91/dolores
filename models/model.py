@@ -8,7 +8,6 @@ from core.models import BaseUserModel
 class UserModel(BaseUserModel):
     pass
 
-
 @Entity
 class ChatModel(Model):
     user = fields.TextField()

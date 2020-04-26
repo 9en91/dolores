@@ -1,20 +1,6 @@
-import os
-# from typing import Type, TypeVar, List
-from typing import Type, List
+from typing import Type
+from core.states import BaseState
 
 
-_USER_MODEL: Type = ""
-#
-_MODEL_FOR_MIGRATE: List[Type] = []
-
-_BASE_DIR = os.path.abspath(os.curdir)
-
-
-# _TOKEN = TOKEN
-# _ID_BOT = ID_BOT
-#
-# _DATABASE = DATABASE
-#
-# _STATE = STATE
-
-
+class Consts:
+    _STATE: Type[BaseState] = BaseState

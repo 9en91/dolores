@@ -22,8 +22,6 @@ class VkBot(VkBotLongPoll,
     _handlers = {}
 
     def __post_init(self):
-        _Loader.load_models()
-        _Loader.load_views()
         self._handlers = ViewHandler._handlers
         self.__user_model = Entity.User.model
 
@@ -51,3 +49,4 @@ class VkBot(VkBotLongPoll,
                         view_handler.cls.user = user
                         view_handler.cls.__getattribute__(message_handler.method)(event)
                         break
+

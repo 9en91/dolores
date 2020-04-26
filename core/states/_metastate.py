@@ -11,6 +11,7 @@ class _BaseState(IntEnum):
 
 @final
 class MetaState(EnumMeta):
+
     __BASE = IntEnum
 
     @classmethod
