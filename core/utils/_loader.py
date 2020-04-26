@@ -43,5 +43,5 @@ class _Loader:
         module = importlib.util.module_from_spec(file)
         file.loader.exec_module(module)
         state_cls = module.__dict__.get(name_cls, BaseState)
-        from core.const import Consts
-        Consts._STATE = state_cls
+        from core.const import _Consts
+        _Consts._STATE = state_cls

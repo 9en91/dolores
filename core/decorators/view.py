@@ -53,5 +53,6 @@ class ViewHandler:
                 handler_view.mcl.append(handler_message)
                 self._rollback_method(cls, name)
         handler_view.mcl = sorted(handler_view.mcl, key=lambda x: x.all)
-        ViewHandler._handlers[self.state] = handler_view
+        from core.const import _Consts
+        _Consts._views[self.state] = handler_view
         return cls

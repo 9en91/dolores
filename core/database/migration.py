@@ -1,14 +1,14 @@
 from core.database.__connector import DatabaseConnector
 from core.database.default import BaseUserModel
 from core.decorators import Entity
-from core.utils._loader import _Loader
 
 
 class DatabaseMigrations:
 
     def __post_init(self):
         if Entity.User._using:
-            self.model_for_migrations.append(Entity.User.model)
+            from core.const import _Consts
+            self.model_for_migrations.append(_Consts._user_model)
         else:
             self.model_for_migrations.append(BaseUserModel)
         self.model_for_migrations += Entity.models
@@ -16,7 +16,6 @@ class DatabaseMigrations:
 
     def __init__(self):
         self.model_for_migrations = []
-        _Loader.load_models()
         self.__post_init()
 
     def migrate(self):

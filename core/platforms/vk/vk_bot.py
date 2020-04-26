@@ -4,6 +4,8 @@ from typing import final
 from vk_api import VkApi
 from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
 from vk_api.vk_api import VkApiMethod
+
+from core.const import _Consts
 from core.database.default import BaseUserModel
 from core.decorators import Entity, ViewHandler
 from core.types._view_container import _ViewContainer, _MessageContainer
@@ -22,8 +24,8 @@ class VkBot(VkBotLongPoll,
     _handlers = {}
 
     def __post_init(self):
-        self._handlers = ViewHandler._handlers
-        self.__user_model = Entity.User.model
+        self._handlers = _Consts._views
+        self.__user_model = _Consts._user_model
 
     def __init__(self):
         print("starting...")

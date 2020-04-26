@@ -2,14 +2,14 @@ from __future__ import annotations
 from dataclasses import dataclass
 from types import FunctionType
 from typing import List, Pattern, Union, Type
-from core.const import Consts
+from core.const import _Consts
 from core.views import ViewSet
 
 
 @dataclass
 class _ViewContainer:
     cls: Type[ViewSet] = None
-    state: Consts._STATE = None
+    state: _Consts._STATE = None
     mcl: List[_MessageContainer] = None
 
 
