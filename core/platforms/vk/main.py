@@ -4,9 +4,10 @@ from typing import final
 import requests
 from vk_api import VkApi
 # from vk_api.vk_api import VkApiMethod
+from vk_api.vk_api import VkApiMethod
 
 from core.platforms._base.abstract_bot import AbstractBot # noqa
-from core.platforms.vk.method import VkApiMethod
+# from core.platforms.vk.method import VkApiMethod
 from core.platforms.vk.types.vk_api_ref import VkBotMessageEvent, VkBotEventType, VkBotEvent
 from core.types._view_container import _ViewContainer, _MessageContainer # noqa
 from settings import TOKEN, ID_BOT # noqa
