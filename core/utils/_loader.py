@@ -27,10 +27,10 @@ class _Loader:
                 module = importlib.util.module_from_spec(file)
                 file.loader.exec_module(module)
 
-    @staticmethod
-    def load_settings():
-        for i, x, y in os.walk(_Loader._path_models):
-            for path in glob.glob(f"{i}/*.py"):
-                file = importlib.util.spec_from_file_location("models", path)
-                module = importlib.util.module_from_spec(file)
-                file.loader.exec_module(module)
+    # @staticmethod
+    # def load_settings():
+    #     for i, x, y in os.walk(_Loader._path_models):
+    #         for path in glob.glob(f"{i}/*.py"):
+    #             file = importlib.util.spec_from_file_location("models", path)
+    #             module = importlib.util.module_from_spec(file)
+    #             file.loader.exec_module(module)

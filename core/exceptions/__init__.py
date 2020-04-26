@@ -1,6 +1,20 @@
-class NotSupportedPlatformException(Exception):
+class PlatformExceptions(Exception):
     pass
 
 
-class SoonPlatformException(Exception):
+class NotSupportedPlatformException(PlatformExceptions):
+    pass
+
+
+class SoonPlatformException(PlatformExceptions):
+    pass
+
+
+class ModelsExceptions(Exception):
+    pass
+
+class TooManyUserModelsException(ModelsExceptions):
+    pass
+
+class NotExtensionUserModelException(ModelsExceptions):
     pass

@@ -1,11 +1,7 @@
-from __future__ import annotations
-from enum import IntEnum, auto, EnumMeta, unique
+from enum import unique, IntEnum, EnumMeta
 from typing import final
 
-
-@final
-class state(int, auto):
-    pass
+from core.states import state
 
 
 @unique
@@ -15,7 +11,6 @@ class _BaseState(IntEnum):
 
 @final
 class MetaState(EnumMeta):
-    START: BaseState
     __BASE = IntEnum
 
     @classmethod
@@ -31,10 +26,3 @@ class MetaState(EnumMeta):
 
     def __init__(cls, name, bases, namespace, **kwargs):
         super().__init__(name, (cls.__BASE,), namespace)
-
-
-class BaseState(metaclass=MetaState):
-    pass
-
-
-

@@ -1,21 +1,25 @@
 from typing import final
-
+from core.exceptions import TooManyUserModelsException, NotExtensionUserModelException
+from core.models import BaseUserModel
 
 @final
 class Entity:
+    models = []
+
+    def __new__(cls, model):
+
+        Entity.models.append(model)
 
     @final
     class User:
-        _using = 0
+        _using = False
+        model = None
 
-        def __init__(self, model):
-            pass
-
-        def __call__(self, *args, **kwargs):
-            pass
-
-    def __init__(self, model):
-        pass
-
-    def __call__(self, *args, **kwargs):
-        pass
+        def __new__(cls, user_model):
+            if not issubclass(user_model, BaseUserModel):
+                raise NotExtensionUserModelException("wrong class inherited")
+            if not Entity.User._using:
+                Entity.User.model = user_model
+                Entity.User._using = True
+            else:
+                raise TooManyUserModelsException("too many user model exception")
