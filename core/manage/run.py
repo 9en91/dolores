@@ -1,6 +1,6 @@
 from typing import Any, final
 
-from core.platforms.vk.vk_bot import VkBot
+from core.platforms.vk.main import VkBot
 from core.manage.abstract import AbstractCommand
 
 

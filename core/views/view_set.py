@@ -9,6 +9,6 @@ class ViewSet(metaclass=ABCMeta):
 
     def __init__(self):
         self.api: Final = get_active_api()
-        self.user = None
+        self.user: Final = None
 
 
