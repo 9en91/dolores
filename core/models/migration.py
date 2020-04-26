@@ -1,5 +1,5 @@
-from core.database.__connector import DatabaseConnector
-from core.database.default import BaseUserModel
+from core.models.__connector import DatabaseConnector
+from core.models import BaseUserModel
 from core.decorators import Entity
 
 

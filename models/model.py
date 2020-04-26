@@ -1,7 +1,5 @@
-from core.database import Model
 from core.decorators import Entity
-from core.database import fields
-from core.models import BaseUserModel
+from core.models import fields, BaseUserModel, Model
 
 
 @Entity.User

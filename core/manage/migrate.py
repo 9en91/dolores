@@ -1,6 +1,6 @@
 from typing import Any, final
 
-from core.database.migration import DatabaseMigrations
+from core.models.migration import DatabaseMigrations
 from core.manage.abstract import AbstractCommand
 
 
