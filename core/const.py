@@ -8,3 +8,4 @@ class _Consts:
     _STATE: Type[BaseState] = BaseState
     _views = {}
     _user_model = BaseUserModel
+    _models = []

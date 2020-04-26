@@ -4,16 +4,13 @@ from core.models import BaseUserModel
 
 @final
 class Entity:
-    models = []
-
     def __new__(cls, model):
-
-        Entity.models.append(model)
+        from core.const import _Consts
+        _Consts._models.append(model)
 
     @final
     class User:
         _using = False
-        model = None
 
         def __new__(cls, user_model):
             from core.const import _Consts

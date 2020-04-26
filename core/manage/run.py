@@ -9,7 +9,6 @@ class RunCommand(AbstractCommand):
 
     def handle(self, request: Any) -> None:
         if request == "run":
-            print("RUN")
             bot = VkBot()
             bot.polling()
         else:

@@ -6,12 +6,12 @@ from core.decorators import Entity
 class DatabaseMigrations:
 
     def __post_init(self):
+        from core.const import _Consts
         if Entity.User._using:
-            from core.const import _Consts
             self.model_for_migrations.append(_Consts._user_model)
         else:
             self.model_for_migrations.append(BaseUserModel)
-        self.model_for_migrations += Entity.models
+        self.model_for_migrations += _Consts._models
 
 
     def __init__(self):
