@@ -3,12 +3,12 @@ from dataclasses import dataclass
 from types import FunctionType
 from typing import List, Pattern, Union, Type
 from core.const import Consts
-from core.views import ViewSet
+from core.views import View
 
 
 @dataclass
 class ViewContainer:
-    cls: Type[ViewSet] = None
+    cls: Type[View] = None
     state: Consts.STATE = None
     mcl: List[MessageContainer] = None
 

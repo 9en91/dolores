@@ -16,8 +16,4 @@ class Entity:
             from core.const import Consts
             if not issubclass(user_model, BaseUserModel):
                 raise NotExtensionUserModelException("wrong class inherited")
-            if not Entity.User.using:
-                Consts.user_model = user_model
-                Entity.User.using = True
-            else:
-                raise TooManyUserModelsException("too many user model exception")
+            Consts.user_model = user_model

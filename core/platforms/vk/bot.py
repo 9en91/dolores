@@ -3,9 +3,9 @@ import re
 from typing import final, List, Optional
 from core.platforms.base.bot import AbstractBot
 from core.platforms.vk.api import VkAPI
+from core.platforms.vk.mixins.message import VkMessagesMixin
 from core.platforms.vk.schema.schema import ResponseSchema
 from core.platforms.vk.types.message import VkResponseType
-from core.utils.view_container import ViewContainer, MessageContainer  # noqa
 from settings import TOKEN, ID_BOT
 from core.const import Consts
 

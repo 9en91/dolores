@@ -4,7 +4,7 @@ from typing import Final
 from core.utils.active_api import get_active_api
 
 
-class ViewSet(metaclass=ABCMeta):
+class View(metaclass=ABCMeta):
 
     def __init__(self):
         self.api: Final = get_active_api().build()
