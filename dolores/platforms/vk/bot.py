@@ -12,8 +12,8 @@ from dolores.const import Consts
 # @final
 class VkBot(AbstractBot):
 
-    def __init__(self, loop):
-        super().__init__(loop)
+    def __init__(self):
+        super().__init__()
         self.url = None
         self.key = None
         self.ts = None
@@ -23,7 +23,7 @@ class VkBot(AbstractBot):
         self.group_id = ID_BOT
         self.wait = 25
 
-        self.longpoll_schema =  ResponseSchema()
+        self.longpoll_schema = ResponseSchema()
 
     async def update_longpoll_server(self, update_ts=True):
         values = {"group_id": self.group_id}
@@ -34,7 +34,7 @@ class VkBot(AbstractBot):
         if update_ts:
             self.ts = response["ts"]
 
-    async def check(self) -> List[Optional[VkResponseType]]:
+    async def get_updates(self) -> List[Optional[VkResponseType]]:
 
         response = await self.session.get(self.url,
                                           params={
@@ -58,7 +58,6 @@ class VkBot(AbstractBot):
 
         elif response["failed"] == 3:
             await self.update_longpoll_server()
-
         return []
 
     async def _init_event(self, event):
@@ -70,17 +69,21 @@ class VkBot(AbstractBot):
     async def polling(self):
         await self.update_longpoll_server()
         while True:
-            for event in await self.check():
+            for update in await self.get_updates():
 
-                if event.type_response != "message_new":
+                if update.type_response != "message_new":
                     continue
 
-                user, state, text = await self._init_event(event)
+                user, state, text = await self._init_event(update)
 
                 if state in self._handlers:
                     view_handler = self._handlers[state]
                     for message_handler in view_handler.mcl:
                         if re.search(message_handler.regex, text):
                             view_handler.cls.user = user
-                            await view_handler.cls.__getattribute__(message_handler.method)(event.object_response.message)
+                            await view_handler.cls.__getattribute__(
+                                message_handler.method
+                            )(
+                                update.object_response.message
+                            )
                             break

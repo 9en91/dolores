@@ -11,7 +11,7 @@ class AbstractAPI(metaclass=ABCMeta):
     RPS_DELAY = 0.34
     url: str = None
 
-    def __init__(self, token: str, session: aiohttp.ClientSession):
+    def __init__(self, token: str, session: aiohttp.ClientSession = None):
         self.token = token
         self.last_request = 0.0
         if session:

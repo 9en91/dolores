@@ -12,6 +12,6 @@ class TgAPI(AbstractAPI):
         delay = self.RPS_DELAY - (time.time() - self.last_request)
         if delay > 0.0:
             await asyncio.sleep(delay)
-        response = await self.session.post(self.url.format(self.token, method), data=params)
-        self.last_request = time.time()
-        return await response.json()
+        async with self.session.post(self.url.format(self.token, method), data=params) as response:
+            self.last_request = time.time()
+            return await response.json()

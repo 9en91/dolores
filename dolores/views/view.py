@@ -9,5 +9,4 @@ class View(metaclass=ABCMeta):
     def __init__(self):
         self.api = get_active_api().build()
         self.user = None
-
-
+        super().__init__()

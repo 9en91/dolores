@@ -10,11 +10,10 @@ from dolores.platforms.vk.types.message import VkResponseType
 
 class AbstractBot(metaclass=ABCMeta):
 
-    def __init__(self, loop: asyncio.AbstractEventLoop):
+    def __init__(self):
         print("starting bot...")
 
         self._polling = False
-        self.loop = loop
         self._handlers = None
         self._user_model = None
         self._post_init()
@@ -26,8 +25,8 @@ class AbstractBot(metaclass=ABCMeta):
         self._handlers = Consts.views
         self.__user_model = Consts.user_model
 
-    async def _init_user(self, event: VkResponseType):
-        user, created = await self.__user_model.get_or_create(id=event.object_response.message.from_id)
+    async def _init_user(self, user_id: int):
+        user, created = await self.__user_model.get_or_create(id=user_id)
         return user
 
     def __del__(self):
