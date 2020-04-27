@@ -1,5 +1,5 @@
 from peewee import Model as BaseModel
-from core.models.__connector import DatabaseConnector
+from core.models.connector import DatabaseConnector
 import peewee
 
 
@@ -15,8 +15,8 @@ class BaseUserModel(Model):
 
     @property
     def state(self):
-        from core.const import _Consts
-        return _Consts._STATE(self._state)
+        from core.const import Consts
+        return Consts.STATE(self._state)
 
     @state.setter
     def state(self, state) -> None:

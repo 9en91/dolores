@@ -1,7 +1,7 @@
 import re
 from types import FunctionType
 from typing import Pattern, Callable, Union, final
-from core.types._view_container import _ViewContainer, _MessageContainer
+from core.utils.view_container import ViewContainer, MessageContainer
 
 
 @final
@@ -11,13 +11,13 @@ class MessageHandler:
         if not isinstance(regex, FunctionType):
             return super(MessageHandler, cls).__new__(cls)
         else:
-            return _MessageContainer(re.compile(".*"), regex, True)
+            return MessageContainer(re.compile(".*"), regex, True)
 
     def __init__(self, *, regex: str = ".*"):
         self.regex: Pattern = re.compile(regex)
 
     def __call__(self, method: Callable):
-        return _MessageContainer(self.regex, method, False)
+        return MessageContainer(self.regex, method, False)
 
 
 @final
@@ -27,12 +27,12 @@ class ViewHandler:
     def __init__(self, state):
         self.state = int(state)
 
-    def _build_message_handler(self, cls, name: str) -> _MessageContainer:
-        handler_message = _MessageContainer(cls.__dict__[name].regex, name, cls.__dict__[name].all)
+    def _build_message_handler(self, cls, name: str) -> MessageContainer:
+        handler_message = MessageContainer(cls.__dict__[name].regex, name, cls.__dict__[name].all)
         return handler_message
 
-    def _build_view_handler(self, cls) -> _ViewContainer:
-        handler = _ViewContainer()
+    def _build_view_handler(self, cls) -> ViewContainer:
+        handler = ViewContainer()
         handler.state = self.state
         instance_handler = cls()
         handler.cls = instance_handler
@@ -48,11 +48,11 @@ class ViewHandler:
         # init handler
         handler_view = self._build_view_handler(cls)
         for name in cls.__dict__.keys():
-            if isinstance(cls.__dict__[name], _MessageContainer):
+            if isinstance(cls.__dict__[name], MessageContainer):
                 handler_message = self._build_message_handler(cls, name)
                 handler_view.mcl.append(handler_message)
                 self._rollback_method(cls, name)
         handler_view.mcl = sorted(handler_view.mcl, key=lambda x: x.all)
-        from core.const import _Consts
-        _Consts._views[self.state] = handler_view
+        from core.const import Consts
+        Consts.views[self.state] = handler_view
         return cls

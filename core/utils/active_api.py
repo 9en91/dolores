@@ -1,8 +1,8 @@
-from core.exceptions import NotSupportedPlatformException
-from core.platforms import PLATFORMS
-import settings
 import telebot
 
+import settings
+from core.exceptions import NotSupportedPlatformException
+from core.platforms import PLATFORMS
 from core.platforms.vk.api import VkAPI
 
 

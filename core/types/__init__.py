@@ -1,1 +1,1 @@
-from core.types.message import Message
+from core.platforms.vk.types.message import VkMessageType

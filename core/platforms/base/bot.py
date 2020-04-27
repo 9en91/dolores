@@ -1,7 +1,9 @@
 import asyncio
 from abc import ABCMeta
 
-from core.platforms.vk.types.message import Response
+import aiohttp
+
+from core.platforms.vk.types.message import VkResponseType
 
 
 class AbstractBot(metaclass=ABCMeta):
@@ -14,11 +16,13 @@ class AbstractBot(metaclass=ABCMeta):
         self.__user_model = None
         self.__post_init()
 
-    def __post_init(self):
-        from core.const import _Consts
-        self._handlers = _Consts._views
-        self.__user_model = _Consts._user_model
+        self.session = aiohttp.ClientSession()
 
-    def _init_user(self, event: Response):
+    def __post_init(self):
+        from core.const import Consts
+        self._handlers = Consts.views
+        self.__user_model = Consts.user_model
+
+    def _init_user(self, event: VkResponseType):
         user, created = self.__user_model.get_or_create(id=event.object_response.message.from_id)
         return user

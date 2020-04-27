@@ -5,19 +5,19 @@ from core.models import BaseUserModel
 @final
 class Entity:
     def __new__(cls, model):
-        from core.const import _Consts
-        _Consts._models.append(model)
+        from core.const import Consts
+        Consts.models.append(model)
 
     @final
     class User:
-        _using = False
+        using = False
 
         def __new__(cls, user_model):
-            from core.const import _Consts
+            from core.const import Consts
             if not issubclass(user_model, BaseUserModel):
                 raise NotExtensionUserModelException("wrong class inherited")
-            if not Entity.User._using:
-                _Consts._user_model = user_model
-                Entity.User._using = True
+            if not Entity.User.using:
+                Consts.user_model = user_model
+                Entity.User.using = True
             else:
                 raise TooManyUserModelsException("too many user model exception")

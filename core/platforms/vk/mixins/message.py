@@ -1,6 +1,6 @@
 from typing import Any
-from vk_api import utils
-from core.api.base import BaseMixin
+from core import utils
+from core.platforms.base.mixin import BaseMixin
 
 
 class MessagesMixin(BaseMixin):

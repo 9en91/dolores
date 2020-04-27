@@ -3,7 +3,7 @@ from typing import List
 
 
 @dataclass
-class Message:
+class VkMessageType:
     date: int
     from_id: int
     message_id: int
@@ -19,7 +19,7 @@ class Message:
 
 
 @dataclass
-class ClientInfo:
+class VkClientInfoType:
     button_actions: List[str]
     keyboard: bool
     inline_keyboard: bool
@@ -28,15 +28,15 @@ class ClientInfo:
 
 
 @dataclass
-class ObjectResponse:
-    message: Message
-    client_info: ClientInfo
+class VkObjectResponseType:
+    message: VkMessageType
+    client_info: VkClientInfoType
 
 
 @dataclass
-class Response:
+class VkResponseType:
     type_response: str
-    object_response: ObjectResponse
+    object_response: VkObjectResponseType
     group_id: int
     event_id: str
 

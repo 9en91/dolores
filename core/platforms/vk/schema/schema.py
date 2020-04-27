@@ -1,8 +1,6 @@
 from typing import List
-
 from marshmallow import Schema, fields, post_load
-
-from core.platforms.vk.types.message import Response, Message, ClientInfo, ObjectResponse
+from core.platforms.vk.types.message import VkResponseType, VkMessageType, VkClientInfoType, VkObjectResponseType
 
 
 class MessageSchema(Schema):
@@ -21,7 +19,7 @@ class MessageSchema(Schema):
 
     @post_load
     def make(self, data, **kwargs):
-        return Message(**data)
+        return VkMessageType(**data)
 
 
 class ClientInfoSchema(Schema):
@@ -33,7 +31,7 @@ class ClientInfoSchema(Schema):
 
     @post_load
     def make(self, data, **kwargs):
-        return ClientInfo(**data)
+        return VkClientInfoType(**data)
 
 
 class ObjectResponseSchema(Schema):
@@ -42,7 +40,7 @@ class ObjectResponseSchema(Schema):
 
     @post_load
     def make(self, data, **kwargs):
-        return ObjectResponse(**data)
+        return VkObjectResponseType(**data)
 
 
 class ResponseSchema(Schema):
@@ -53,4 +51,4 @@ class ResponseSchema(Schema):
 
     @post_load
     def make(self, data, **kwargs):
-        return Response(**data)
+        return VkResponseType(**data)
