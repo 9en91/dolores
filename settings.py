@@ -1,7 +1,7 @@
 import os
 from peewee import PostgresqlDatabase
-from core.platforms import PLATFORMS
-from core.utils.load_token import get_bot_token
+from dolores.platforms import PLATFORMS
+from dolores.utils.load_token import get_bot_token
 
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))

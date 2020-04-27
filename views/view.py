@@ -1,6 +1,6 @@
-from core.decorators import ViewHandler, MessageHandler
-from core.types import VkMessagesMixin, VkMessageType
-from core.views import View
+from dolores.decorators import ViewHandler, MessageHandler
+from dolores.types import VkMessagesMixin, VkMessageType
+from dolores.views import View
 from tools.state import State
 
 
@@ -10,7 +10,6 @@ class StartView(View, VkMessagesMixin):
     @MessageHandler(regex="[П,п]ривет")
     async def hi(self, event: VkMessageType) -> None:
         await self.send_message(self.user, "Привет")
-
 
     @MessageHandler
     async def other(self, event: VkMessageType) -> None:

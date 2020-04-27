@@ -1,5 +1,5 @@
-from core.decorators import Entity
-from core.models import fields, BaseUserModel, Model
+from dolores.decorators import Entity
+from dolores.models import fields, BaseUserModel, Model
 
 
 @Entity.User

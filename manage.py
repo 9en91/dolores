@@ -8,14 +8,14 @@ async def main():
     elif len(sys.argv) > 2:
         raise Exception("too many arguments")
     else:
-        from core.utils.loader import Loader
+        from dolores.utils.loader import Loader
 
         Loader.load_state()
         Loader.load_models()
         Loader.load_views()
 
-        from core.manage.migrate import MigrateCommand
-        from core.manage.run import RunCommand
+        from dolores.manage.migrate import MigrateCommand
+        from dolores.manage.run import RunCommand
 
         run = RunCommand()
         migrate = MigrateCommand()

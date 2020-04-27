@@ -1,5 +1,5 @@
 from typing import final
-from core.states import state, BaseState
+from dolores.states import state, BaseState
 
 
 @final
