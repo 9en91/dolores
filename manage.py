@@ -1,7 +1,8 @@
+import asyncio
 import sys
 
 
-def main():
+async def main():
     if len(sys.argv) <= 1:
         raise Exception("missing argument")
     elif len(sys.argv) > 2:
@@ -19,10 +20,10 @@ def main():
         run = RunCommand()
         migrate = MigrateCommand()
         run.set_next(migrate)
-        run.handle(sys.argv[1])
+        await run.handle(sys.argv[1])
 
 
 if __name__ == '__main__':
-    main()
-
+    asyncio.run(main())
+    # main()
 

@@ -9,7 +9,7 @@ class Command(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def handle(self, request) -> None:
+    async def handle(self, request) -> None:
         pass
 
 
@@ -21,8 +21,8 @@ class AbstractCommand(Command):
         return handler
 
     @abstractmethod
-    def handle(self, request: str) -> None:
+    async def handle(self, request: str) -> None:
         if self._next_handler:
-            self._next_handler.handle(request)
+            await self._next_handler.handle(request)
         else:
             print("incorrect command")

@@ -7,9 +7,9 @@ from core.manage.abstract import AbstractCommand
 @final
 class MigrateCommand(AbstractCommand):
 
-    def handle(self, request: Any) -> None:
+    async def handle(self, request: Any) -> None:
         if request == "migrate":
             migrations = DatabaseMigrations()
             migrations.migrate()
         else:
-            super().handle(request)
+            await super().handle(request)

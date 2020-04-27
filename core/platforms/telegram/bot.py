@@ -1,6 +1,6 @@
 from typing import final
 
-from core.platforms._base.abstract_bot import AbstractBot
+from core.platforms.base.bot import AbstractBot
 
 
 @final
