@@ -7,6 +7,6 @@ import settings
 from core.api.messages import MessagesMixin
 
 
-@final
-class VkAPI(MessagesMixin):
-    api: VkApiMethod = VkApi(token=settings.TOKEN).get_api()
+# @final
+# class VkAPI(MessagesMixin):
+#     api: VkApiMethod = VkApi(token=settings.TOKEN).get_api()
