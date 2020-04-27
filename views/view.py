@@ -1,7 +1,7 @@
 from vk_api import utils
 
 from core.decorators import ViewHandler, MessageHandler
-from core.types import Message
+from core.platforms.vk.types.message import Message
 from core.views import ViewSet
 from tools.state import State
 

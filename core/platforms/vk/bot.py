@@ -1,15 +1,15 @@
 import asyncio
 import re
-from typing import final
-
+from typing import final, Dict, List, Optional
 import aiohttp
-
 from core.platforms.base.bot import AbstractBot
 from core.platforms.vk.api import VkAPI
+from core.platforms.vk.schema.schema import ResponseSchema
+from core.platforms.vk.types.message import Response
 from core.types._view_container import _ViewContainer, _MessageContainer  # noqa
 from settings import TOKEN, ID_BOT
 from core.api.messages import MessagesMixin
-from tools.state import State
+from core.const import _Consts
 
 
 @final
@@ -36,7 +36,7 @@ class VkBot(AbstractBot):
         if update_ts:
             self.ts = response["ts"]
 
-    async def check(self):
+    async def check(self) -> List[Optional[Dict]]:
         response = await self.session.get(self.url,
                                           params={
                                               "act": "a_check",
@@ -64,21 +64,26 @@ class VkBot(AbstractBot):
 
     async def polling(self):
         await self.update_longpoll_server()
+        schema = ResponseSchema()
         while True:
-            for event in await self.check():
-                print(event)
-                if event["type"] != "message_new":
+            for raw_event in await self.check():
+                event: Response = schema.load(raw_event)
+                if event.type_response != "message_new":
                     continue
+
                 user = self._init_user(event)
-                text = event["object"]["message"]["text"]
-                state = State(user.state)
+                text = event.object_response.message.text
+
+                state = _Consts._STATE(user.state)
                 if state in self._handlers:
                     view_handler: _ViewContainer = self._handlers[state]
                     message_handler: _MessageContainer
                     for message_handler in view_handler.mcl:
                         if re.search(message_handler.regex, text):
                             view_handler.cls.user = user
-                            view_handler.cls.__getattribute__(message_handler.method)(event)
+                            view_handler.cls.__getattribute__(
+                                message_handler.method
+                            )(event.object_response.message)
                             break
 
     def __del__(self):

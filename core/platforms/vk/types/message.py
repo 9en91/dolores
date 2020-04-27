@@ -6,7 +6,7 @@ from typing import List
 class Message:
     date: int
     from_id: int
-    id: int
+    message_id: int
     out: int
     peer_id: int
     text: str
