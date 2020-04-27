@@ -65,8 +65,8 @@ class VkBot(AbstractBot):
     async def polling(self):
         await self.update_longpoll_server()
         while True:
-            # print(self.url)
             for event in await self.check():
+                print(event)
                 if event["type"] != "message_new":
                     continue
                 user = self._init_user(event)

@@ -53,8 +53,6 @@ class AbstractAPI(metaclass=ABCMeta):
         self.last_request = time.time()
         return await response.json()
 
-
-
     def __del__(self):
         asyncio.create_task(self._close())
 
