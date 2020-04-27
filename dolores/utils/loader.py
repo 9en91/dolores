@@ -1,12 +1,12 @@
 import os
 import glob
 import importlib.util
-from typing import final
+# from typing import final
 
 from settings import BASE_DIR
 
 
-@final
+# @final
 class Loader:
     _path_views = os.path.join(BASE_DIR, "views")
     _path_models = os.path.join(BASE_DIR, "models")

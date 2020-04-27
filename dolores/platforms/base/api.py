@@ -4,10 +4,6 @@ import time
 from abc import abstractmethod, ABCMeta
 from typing import Dict
 import aiohttp
-import six
-
-from vk_api.vk_api import VkApiMethod
-
 from dolores.platforms.base.builder import BuilderApi
 
 
@@ -26,21 +22,13 @@ class AbstractAPI(metaclass=ABCMeta):
                     "Mozilla/5.0 (Windows NT 6.1; rv:52.0) Gecko/20100101 Firefox/52.0"
             })
 
-    @abstractmethod
-    def _build_params_request(self, params: Dict) -> Dict:
-        pass
 
     def build(self):
         return BuilderApi(self)
 
+    @abstractmethod
     async def method(self, method: str, params: Dict = None) -> Dict:
-        params = self._build_params_request(params)
-        delay = self.RPS_DELAY - (time.time() - self.last_request)
-        if delay > 0.0:
-            await asyncio.sleep(delay)
-        response = await self.session.post(f"{self.url}{method}", data=params)
-        self.last_request = time.time()
-        return await response.json()
+        pass
 
     def __del__(self):
         asyncio.create_task(self._close())

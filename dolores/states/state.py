@@ -1,8 +1,8 @@
 from __future__ import annotations
 from enum import auto
-from typing import final
+# from typing import final
 
 
-@final
+# @final
 class state(int, auto):
     pass

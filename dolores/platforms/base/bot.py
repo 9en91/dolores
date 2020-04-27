@@ -2,7 +2,9 @@ import asyncio
 from abc import ABCMeta
 
 import aiohttp
+import peewee_async
 
+from dolores.models.connector import DatabaseConnector
 from dolores.platforms.vk.types.message import VkResponseType
 
 
@@ -11,18 +13,26 @@ class AbstractBot(metaclass=ABCMeta):
     def __init__(self, loop: asyncio.AbstractEventLoop):
         print("starting bot...")
 
+        self._polling = False
         self.loop = loop
-        _handlers = {}
-        self.__user_model = None
-        self.__post_init()
+        self._handlers = None
+        self._user_model = None
+        self._post_init()
 
         self.session = aiohttp.ClientSession()
 
-    def __post_init(self):
+    def _post_init(self):
         from dolores.const import Consts
         self._handlers = Consts.views
         self.__user_model = Consts.user_model
 
-    def _init_user(self, event: VkResponseType):
-        user, created = self.__user_model.get_or_create(id=event.object_response.message.from_id)
+    async def _init_user(self, event: VkResponseType):
+        user, created = await self.__user_model.get_or_create(id=event.object_response.message.from_id)
         return user
+
+    def __del__(self):
+        loop = asyncio.new_event_loop()
+        loop.run_until_complete(self.close())
+
+    async def close(self):
+        await self.session.close()

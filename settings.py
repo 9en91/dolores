@@ -1,8 +1,8 @@
 import os
-from peewee import PostgresqlDatabase
+# from peewee import PostgresqlDatabase
 from dolores.platforms import PLATFORMS
 from dolores.utils.load_token import get_bot_token
-
+import peewee_async
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -18,7 +18,7 @@ DATABASE = {
         "host": "localhost",
         "port": 5432,
     },
-    "DRIVER": PostgresqlDatabase
+    "DRIVER": peewee_async.PostgresqlDatabase
 }
 
 STATE = "tools.state.State"

@@ -1,10 +1,10 @@
 import re
 from types import FunctionType
-from typing import Pattern, Callable, Union, final
+from typing import Pattern, Callable, Union
 from dolores.utils.view_container import ViewContainer, MessageContainer
 
 
-@final
+# @final
 class MessageHandler:
 
     def __new__(cls, regex: Union[FunctionType, str]):
@@ -20,7 +20,7 @@ class MessageHandler:
         return MessageContainer(self.regex, method, False)
 
 
-@final
+# @final
 class ViewHandler:
     _handlers = {}
 

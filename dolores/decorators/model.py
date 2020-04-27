@@ -1,16 +1,17 @@
-from typing import final
+# from typing import final
 from dolores.exceptions import NotExtensionUserModelException
 from dolores.models import BaseUserModel
 
-@final
+# @final
 class Entity:
     def __new__(cls, model):
         from dolores.const import Consts
-        Consts.models.append(model)
+        if model.__name__ not in map(lambda entity: entity.__name__, Consts.models):
+            Consts.models.append(model)
 
-    @final
+    # @final
     class User:
-        using = False
+        using = False      
 
         def __new__(cls, user_model):
             from dolores.const import Consts

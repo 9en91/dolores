@@ -1,9 +1,9 @@
-from typing import final
+# from typing import final
 
 from settings import DATABASE
 
 
-@final
+# @final
 class DatabaseConnector:
     @classmethod
     def __new__(cls, *args, **kwargs):

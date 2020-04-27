@@ -1,6 +1,6 @@
 import asyncio
 import re
-from typing import final, List, Optional
+from typing import List, Optional
 from dolores.platforms.base.bot import AbstractBot
 from dolores.platforms.vk.api import VkAPI
 from dolores.platforms.vk.schema.schema import ResponseSchema
@@ -9,7 +9,7 @@ from settings import TOKEN, ID_BOT
 from dolores.const import Consts
 
 
-@final
+# @final
 class VkBot(AbstractBot):
 
     def __init__(self, loop):
@@ -61,8 +61,8 @@ class VkBot(AbstractBot):
 
         return []
 
-    def _init_event(self, event):
-        user = self._init_user(event)
+    async def _init_event(self, event):
+        user = await self._init_user(event)
         text = event.object_response.message.text
         state = Consts.STATE(user.state)
         return user, state, text
@@ -75,7 +75,7 @@ class VkBot(AbstractBot):
                 if event.type_response != "message_new":
                     continue
 
-                user, state, text = self._init_event(event)
+                user, state, text = await self._init_event(event)
 
                 if state in self._handlers:
                     view_handler = self._handlers[state]
@@ -84,13 +84,3 @@ class VkBot(AbstractBot):
                             view_handler.cls.user = user
                             await view_handler.cls.__getattribute__(message_handler.method)(event.object_response.message)
                             break
-
-    def __del__(self):
-        asyncio.create_task(self._close())
-
-    async def _close(self):
-        if not self.session.closed:
-            await self.session.close()
-
-    async def _start(self):
-        await self.update_longpoll_server()

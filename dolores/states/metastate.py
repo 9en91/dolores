@@ -1,5 +1,5 @@
 from enum import unique, IntEnum, EnumMeta
-from typing import final
+# from typing import final
 
 from dolores.states import state
 
@@ -9,7 +9,7 @@ class _BaseState(IntEnum):
     START = state()
 
 
-@final
+# @final
 class MetaState(EnumMeta):
 
     BASE = IntEnum

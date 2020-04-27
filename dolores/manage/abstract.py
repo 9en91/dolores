@@ -1,4 +1,6 @@
 from __future__ import annotations
+
+import asyncio
 from abc import abstractmethod, ABCMeta
 
 
@@ -15,6 +17,7 @@ class Command(metaclass=ABCMeta):
 
 class AbstractCommand(Command):
     _next_handler: Command = None
+    loop = asyncio.get_event_loop()
 
     def set_next(self, handler: Command) -> Command:
         self._next_handler = handler

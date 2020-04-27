@@ -1,10 +1,10 @@
-from typing import Any, final
+from typing import Any
 
 from dolores.models.migration import DatabaseMigrations
 from dolores.manage.abstract import AbstractCommand
 
 
-@final
+# @final
 class MigrateCommand(AbstractCommand):
 
     async def handle(self, request: Any) -> None:

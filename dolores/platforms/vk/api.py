@@ -31,3 +31,12 @@ class VkAPI(AbstractAPI):
             params["v"] = self.version
         params["access_token"] = self.token
         return params
+
+    async def method(self, method: str, params: Dict = None) -> Dict:
+        params = self._build_params_request(params)
+        delay = self.RPS_DELAY - (time.time() - self.last_request)
+        if delay > 0.0:
+            await asyncio.sleep(delay)
+        response = await self.session.post(f"{self.url}{method}", data=params)
+        self.last_request = time.time()
+        return await response.json()
