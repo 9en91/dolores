@@ -1,7 +1,7 @@
-from typing import final
-from core.states import state, BaseState
+# from typing import final
+from dolores.states import state, BaseState
 
 
-@final
+# @final
 class State(BaseState):
     SECOND = state()

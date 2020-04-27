@@ -1,22 +1,17 @@
-from vk_api import utils
-
-from core.decorators import ViewHandler, MessageHandler
-from core.platforms.vk.types.message import Message
-from core.views import ViewSet
+from dolores.decorators import ViewHandler, MessageHandler
+from dolores.types import VkMessagesMixin, VkMessageType
+from dolores.views import View
 from tools.state import State
 
 
 @ViewHandler(state=State.START)
-class StartViewSet(ViewSet):
+class StartView(View, VkMessagesMixin):
 
     @MessageHandler(regex="[П,п]ривет")
-    async def hi(self, event: Message) -> None:
-        await self.api.messages.send(user_id=self.user.id,
-                                     random_id=utils.get_random_id(),
-                                     message=event.text)
+    async def hi(self, event: VkMessageType) -> None:
+        await self.send_message(self.user, "Привет")
 
     @MessageHandler
-    async def bye(self, event: Message) -> None:
-        await self.api.messages.send(user_id=self.user.id,
-                                     random_id=utils.get_random_id(),
-                                     message="Не понимаю")
+    async def other(self, event: VkMessageType) -> None:
+        await self.send_message(self.user, event.text)
+
