@@ -24,6 +24,7 @@ class ClientInfo:
     keyboard: bool
     inline_keyboard: bool
     lang_id: int
+    carousel: bool
 
 
 @dataclass

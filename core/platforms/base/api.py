@@ -8,6 +8,8 @@ import six
 
 from vk_api.vk_api import VkApiMethod
 
+from core.platforms.base.builder import BuilderApi
+
 
 class AbstractAPI(metaclass=ABCMeta):
     RPS_DELAY = 0.34
@@ -29,7 +31,7 @@ class AbstractAPI(metaclass=ABCMeta):
         pass
 
     def build(self):
-        return VkApiMethod(self)
+        return BuilderApi(self)
 
     async def method(self, method: str, params: Dict = None) -> Dict:
         params = self._build_params_request(params)

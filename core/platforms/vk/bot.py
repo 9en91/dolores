@@ -67,6 +67,7 @@ class VkBot(AbstractBot):
         schema = ResponseSchema()
         while True:
             for raw_event in await self.check():
+                print(raw_event)
                 event: Response = schema.load(raw_event)
                 if event.type_response != "message_new":
                     continue

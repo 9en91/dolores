@@ -8,7 +8,7 @@ from core.api import get_active_api
 class ViewSet(metaclass=ABCMeta):
 
     def __init__(self):
-        self.api: Final = get_active_api()
+        self.api: Final = get_active_api().build()
         self.user: Final = None
 
 

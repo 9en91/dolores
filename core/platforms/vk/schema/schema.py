@@ -29,6 +29,7 @@ class ClientInfoSchema(Schema):
     keyboard: bool = fields.Boolean(data_key="keyboard")
     inline_keyboard: bool = fields.Boolean(data_key="inline_keyboard")
     lang_id: int = fields.Integer(data_key="lang_id")
+    carousel: bool = fields.Boolean(allow_none=True)
 
     @post_load
     def make(self, data, **kwargs):
