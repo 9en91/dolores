@@ -81,7 +81,7 @@ class VkBot(AbstractBot):
                     for message_handler in view_handler.mcl:
                         if re.search(message_handler.regex, text):
                             view_handler.cls.user = user
-                            view_handler.cls.__getattribute__(
+                            await view_handler.cls.__getattribute__(
                                 message_handler.method
                             )(event.object_response.message)
                             break

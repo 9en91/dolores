@@ -4,22 +4,9 @@ import time
 from abc import abstractmethod, ABCMeta
 from typing import Dict
 import aiohttp
+import six
 
-
-class BuilderApi:
-
-    def __init__(self, api, method=None):
-        self._api = api
-        self._method = method
-
-    def __getattr__(self, method: str):
-        if self._method:
-            method = f"{self._method}.{method}"
-        self._method = method
-        return BuilderApi(self._api, method)
-
-    async def __call__(self, **kwargs):
-        return await self.api.method(self._method, kwargs)
+from vk_api.vk_api import VkApiMethod
 
 
 class AbstractAPI(metaclass=ABCMeta):
@@ -42,7 +29,7 @@ class AbstractAPI(metaclass=ABCMeta):
         pass
 
     def build(self):
-        return BuilderApi(self)
+        return VkApiMethod(self)
 
     async def method(self, method: str, params: Dict = None) -> Dict:
         params = self._build_params_request(params)

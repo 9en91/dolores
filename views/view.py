@@ -9,20 +9,15 @@ from tools.state import State
 @ViewHandler(state=State.START)
 class StartViewSet(ViewSet):
 
-    @MessageHandler(regex="[Н,н]ачать")
-    def start(self, event: Message) -> None:
-        self.api.messages.send(user_id=self.user.id,
-                               random_id=utils.get_random_id(),
-                               message="Ой, ты что-то начал")
-
     @MessageHandler(regex="[П,п]ривет")
-    def hi(self, event: Message) -> None:
-        self.api.messages.send(user_id=self.user.id,
-                               random_id=utils.get_random_id(),
-                               message="Привет")
+    async def hi(self, event: Message) -> None:
+        await self.api.messages.send(user_id=self.user.id,
+                                     random_id=utils.get_random_id(),
+                                     message="Привет")
 
     @MessageHandler
-    def bye(self, event: Message) -> None:
-        self.api.messages.send(user_id=self.user.id,
-                               random_id=utils.get_random_id(),
-                               message="Не понимаю")
+    async def bye(self, event: Message) -> None:
+        print(self.api.messages.send._method)
+        await self.api.messages.send(user_id=self.user.id,
+                                     random_id=utils.get_random_id(),
+                                     message="Не понимаю")

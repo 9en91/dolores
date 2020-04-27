@@ -1,14 +1,14 @@
-from vk_api import VkApi
-
-from core.exceptions import SoonPlatformException, NotSupportedPlatformException
+from core.exceptions import NotSupportedPlatformException
 from core.platforms import PLATFORMS
 import settings
 import telebot
 
+from core.platforms.vk.api import VkAPI
+
 
 def get_active_api():
     if settings.PLATFORM == PLATFORMS.VK:
-        api = VkApi(token=settings.TOKEN).get_api()
+        api = VkAPI(token=settings.TOKEN).build()
     elif settings.PLATFORM.TELEGRAM:
         api = telebot.TeleBot(token=settings.TOKEN)
     else:
