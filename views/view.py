@@ -13,11 +13,10 @@ class StartViewSet(ViewSet):
     async def hi(self, event: Message) -> None:
         await self.api.messages.send(user_id=self.user.id,
                                      random_id=utils.get_random_id(),
-                                     message="Привет")
+                                     message=event.text)
 
     @MessageHandler
     async def bye(self, event: Message) -> None:
-        print(self.api.messages.send._method)
         await self.api.messages.send(user_id=self.user.id,
                                      random_id=utils.get_random_id(),
                                      message="Не понимаю")
