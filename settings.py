@@ -5,9 +5,9 @@ import peewee_async
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-PLATFORM = PLATFORMS.TELEGRAM
+PLATFORM = PLATFORMS.VK
 TOKEN = get_bot_token(BASE_DIR)
-ID_BOT = 1220113915
+ID_BOT = 188183065
 
 DATABASE = {
     "CONFIG": {

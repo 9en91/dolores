@@ -1,4 +1,3 @@
-import telebot
 
 import settings
 from dolores.exceptions import NotSupportedPlatformException

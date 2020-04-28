@@ -61,7 +61,7 @@ class VkBot(AbstractBot):
         return []
 
     async def _init_event(self, event):
-        user = await self._init_user(event)
+        user = await self._init_user(event.object_response.message.from_id)
         text = event.object_response.message.text
         state = Consts.STATE(user.state)
         return user, state, text

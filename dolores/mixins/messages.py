@@ -32,7 +32,7 @@ class PlatformMixin(type):
         super().__init__(name, bases, namespace)
 
 
-class MessagesMixin(VkMessagesMixin, TgMessagesMixin, metaclass=PlatformMixin):
+class MessagesMixin(TgMessagesMixin, VkMessagesMixin, metaclass=PlatformMixin):
 
     async def send_message(self, user: UserModel, text: str, keyboard: Any = None):
         print(super().send_message)

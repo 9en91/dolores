@@ -7,7 +7,6 @@ import peewee
 class Model(BaseModel):
     __objects = peewee_async.Manager(DatabaseConnector.get_connection())
 
-
     @classmethod
     async def get_or_create(cls, defaults=None, **kwargs):
         return await Model.__objects.get_or_create(cls, defaults=None, **kwargs)
