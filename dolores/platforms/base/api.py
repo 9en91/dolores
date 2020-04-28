@@ -1,6 +1,5 @@
 from __future__ import annotations
 import asyncio
-import time
 from abc import abstractmethod, ABCMeta
 from typing import Dict
 import aiohttp
@@ -22,7 +21,6 @@ class AbstractAPI(metaclass=ABCMeta):
                     "Mozilla/5.0 (Windows NT 6.1; rv:52.0) Gecko/20100101 Firefox/52.0"
             })
 
-
     def build(self):
         return BuilderApi(self)
 
@@ -31,9 +29,9 @@ class AbstractAPI(metaclass=ABCMeta):
         pass
 
     def __del__(self):
-        asyncio.create_task(self._close())
+        asyncio.create_task(self.close())
 
-    async def _close(self):
+    async def close(self):
         if not self.session.closed:
             await self.session.close()
 
