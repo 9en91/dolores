@@ -7,7 +7,7 @@ from dolores.platforms.base.builder import BuilderApi
 
 
 class AbstractAPI(metaclass=ABCMeta):
-    RPS_DELAY = 0.34
+    RPS_DELAY = 0.05
     url: str = None
 
     def __init__(self, token: str, session: aiohttp.ClientSession = None):

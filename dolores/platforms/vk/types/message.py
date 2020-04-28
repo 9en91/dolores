@@ -21,9 +21,9 @@ class VkMessageType:
 @dataclass
 class VkClientInfoType:
     button_actions: List[str]
-    keyboard: bool
-    inline_keyboard: bool
     lang_id: int
+    keyboard: bool = None
+    inline_keyboard: bool = None
     carousel: bool = None
 
 
