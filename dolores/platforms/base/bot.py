@@ -15,7 +15,8 @@ class AbstractBot(metaclass=ABCMeta):
 
     def __init__(self):
         print("starting bot...")
-
+        self.api = None
+        self.builder = None
         self._polling = False
         self._handlers = None
         self._user_model = None
@@ -45,21 +46,18 @@ class AbstractBot(metaclass=ABCMeta):
             for message_handler in view_handler.mcl:
                 if re.search(message_handler.regex, text):
                     view_handler.cls.user = user
+                    view_handler.cls.api = self.builder
                     task = view_handler.cls.__getattribute__(message_handler.method)
                     asyncio.create_task(task(message))
                     break
 
     @abstractmethod
-    def get_updates(self) -> List[Union[TgResultsType, VkResponseType]]:
+    async def get_updates(self) -> List[Union[TgResultsType, VkResponseType]]:
         pass
 
     @abstractmethod
-    def polling(self) -> NoReturn:
+    async def polling(self) -> NoReturn:
         pass
 
-    def __del__(self):
-        asyncio.create_task(self.close())
-
     async def close(self):
-        if not self.session.closed:
-            await self.session.close()
+        await self.session.close()

@@ -6,7 +6,7 @@ from dolores.utils.active_api import get_active_api
 
 class View(metaclass=ABCMeta):
 
-    def __init__(self):
-        self.api = get_active_api().build()
+    def __init__(self, api):
+        self.api = api
         self.user = None
         super().__init__()

@@ -13,12 +13,16 @@ class RunCommand(AbstractCommand):
 
     async def handle(self, request: Any) -> None:
         if request == "run":
-            if settings.PLATFORM == PLATFORMS.VK:
-                bot = VkBot()
-            elif settings.PLATFORM == PLATFORMS.TELEGRAM:
-                bot = TgBot()
-            else:
-                raise Exception
-            await bot.polling()
+            try:
+                if settings.PLATFORM == PLATFORMS.VK:
+                    bot = VkBot()
+                elif settings.PLATFORM == PLATFORMS.TELEGRAM:
+                    bot = TgBot()
+                else:
+                    raise Exception
+                await bot.polling()
+            finally:
+                await bot.api.close()
+                await bot.close()
         else:
             await super().handle(request)

@@ -11,7 +11,7 @@ class VkBot(AbstractBot):
 
     def __init__(self):
         super().__init__()
-        self.api = VkAPI(token=TOKEN, session=self.session)
+        self.api = VkAPI(token=TOKEN)
 
         self.url = None
         self.key = None
@@ -31,25 +31,23 @@ class VkBot(AbstractBot):
             self.ts = response["ts"]
 
     async def get_updates(self) -> List[VkResponseType]:
-        response = await self.session.get(self.url,
-                                          params={
-                                              "act": "a_check",
-                                              "key": self.key,
-                                              "ts": self.ts,
-                                              "wait": self.wait,
-                                          },
-                                          timeout=self.wait + 10)
-        response = await response.json()
-        if "failed" not in response:
-            self.ts = response["ts"]
-            return self.longpoll_schema.load(response["updates"], many=True)
-        elif response["failed"] == 1:
-            self.ts = response["ts"]
-        elif response["failed"] == 2:
-            await self._update_longpoll_server(update_ts=False)
-        elif response["failed"] == 3:
-            await self._update_longpoll_server()
-        return []
+        async with await self.session.get(self.url, params={
+            "act": "a_check",
+            "key": self.key,
+            "ts": self.ts,
+            "wait": self.wait,
+        }, timeout=self.wait + 10) as response:
+            response = await response.json()
+            if "failed" not in response:
+                self.ts = response["ts"]
+                return self.longpoll_schema.load(response["updates"], many=True)
+            elif response["failed"] == 1:
+                self.ts = response["ts"]
+            elif response["failed"] == 2:
+                await self._update_longpoll_server(update_ts=False)
+            elif response["failed"] == 3:
+                await self._update_longpoll_server()
+            return []
 
     async def polling(self) -> NoReturn:
         self._polling = True

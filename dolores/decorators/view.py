@@ -34,7 +34,7 @@ class ViewHandler:
     def _build_view_handler(self, cls) -> ViewContainer:
         handler = ViewContainer()
         handler.state = self.state
-        instance_handler = cls()
+        instance_handler = cls(None)
         handler.cls = instance_handler
         handler.mcl = []
         return handler

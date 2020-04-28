@@ -37,6 +37,6 @@ class VkAPI(AbstractAPI):
         delay = self.RPS_DELAY - (time.time() - self.last_request)
         if delay > 0.0:
             await asyncio.sleep(delay)
-        response = await self.session.post(f"{self.url}{method}", data=params)
-        self.last_request = time.time()
-        return await response.json()
+        async with await self.session.post(f"{self.url}{method}", data=params) as response:
+            self.last_request = time.time()
+            return await response.json()

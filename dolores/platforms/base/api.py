@@ -28,11 +28,7 @@ class AbstractAPI(metaclass=ABCMeta):
     async def method(self, method: str, params: Dict = None) -> Dict:
         pass
 
-    def __del__(self):
-        asyncio.create_task(self.close())
-
     async def close(self):
-        if not self.session.closed:
-            await self.session.close()
+        await self.session.close()
 
 

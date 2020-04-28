@@ -1,8 +1,6 @@
 import asyncio
 import re
 from typing import List, Tuple, Any, NoReturn
-
-from dolores.const import Consts
 from dolores.platforms.base.bot import AbstractBot
 from dolores.platforms.telegram.api import TgAPI
 from dolores.platforms.telegram.schema.schema import ResponseSchema
