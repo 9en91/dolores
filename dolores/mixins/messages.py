@@ -1,22 +1,39 @@
-from typing import Any
-from dolores import utils
+from typing import Any, Generic, TypeVar
 from dolores.platforms import PLATFORMS
-from dolores.platforms.base.mixin import BaseMixin
 from dolores.platforms.base.protocols.messages import MessagesProtocol
 from dolores.platforms.telegram.mixins.message import TgMessagesMixin
 from dolores.platforms.vk.mixins.message import VkMessagesMixin
+from dolores.views import View
 from models.model import UserModel
 import settings
 
 
-class MessagesMixin(VkMessagesMixin, TgMessagesMixin):
-    def __init__(self):
+class PlatformMixin(type):
+
+    def __new__(mcs, name, bases, namespace):
+        if issubclass(mcs, View):
+            return super(PlatformMixin, mcs).__new__(mcs, name, bases, namespace)
         if settings.PLATFORM == PLATFORMS.VK:
-            self.base = VkMessagesMixin
+            cls_platform = VkMessagesMixin
         elif settings.PLATFORM == PLATFORMS.TELEGRAM:
-            self.base = TgMessagesMixin
+            cls_platform = TgMessagesMixin
+        else:
+            raise Exception
+        return super(PlatformMixin, mcs).__new__(mcs, name, (cls_platform,), namespace)
+
+    def __init__(cls, name, bases, namespace):
+        if not issubclass(cls, View):
+            if settings.PLATFORM == PLATFORMS.VK:
+                bases = (VkMessagesMixin,)
+            elif settings.PLATFORM == PLATFORMS.TELEGRAM:
+                bases = (TgMessagesMixin,)
+            else:
+                raise Exception
+        super().__init__(name, bases, namespace)
+
+
+class MessagesMixin(VkMessagesMixin, TgMessagesMixin, metaclass=PlatformMixin):
 
     async def send_message(self, user: UserModel, text: str, keyboard: Any = None):
-        for i in self.__class__.__mro__:
-            if i == self.base:
-                await i.send_message(self, user, text)
+        print(super().send_message)
+        return await super().send_message(user, text, keyboard)

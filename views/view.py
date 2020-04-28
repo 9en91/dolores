@@ -14,5 +14,5 @@ class StartView(View, MessagesMixin):
 
     @MessageHandler
     async def other(self, event: VkMessageType) -> None:
-        await self.send_message(self.user, event.text)
+        print(await self.send_message(self.user, event.text))
 

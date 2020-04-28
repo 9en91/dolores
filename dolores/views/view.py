@@ -4,7 +4,7 @@ from abc import ABCMeta
 from dolores.utils.active_api import get_active_api
 
 
-class View(metaclass=ABCMeta):
+class View:
 
     def __init__(self):
         self.api = get_active_api().build()
