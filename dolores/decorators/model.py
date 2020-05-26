@@ -1,21 +1,17 @@
-# from typing import final
-from dolores.exceptions import NotExtensionUserModelException
-from dolores.models import BaseUserModel
 
-# @final
+from dolores.const import consts
+
+
 class Entity:
-    def __new__(cls, model):
-        from dolores.const import Consts
-        if model.__name__ not in map(lambda entity: entity.__name__, Consts.models):
-            Consts.models.append(model)
+    def __init__(self, abstract=None):
+        self.abstract = abstract
 
-    # @final
+    def __call__(self, cls):
+        consts.add_model(cls)
+
     class User:
-        using = False      
+        def __init__(self):
+            pass
 
-        def __new__(cls, user_model):
-            from dolores.const import Consts
-            if not issubclass(user_model, BaseUserModel):
-                raise NotExtensionUserModelException("wrong class inherited")
-            Consts.user_model = user_model
-            Entity.User.using = True
+        def __call__(self, cls):
+            consts.add_user_model(cls)

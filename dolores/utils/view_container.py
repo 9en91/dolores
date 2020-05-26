@@ -16,11 +16,9 @@ class ViewContainer:
 @dataclass
 class MessageContainer:
     regex: Pattern
+    content: List
     method: Union[FunctionType, str]
     all: bool = False
 
-    @classmethod
-    def build(cls, other: MessageContainer):
-        return cls(other.regex, other.method, other.all)
 
 

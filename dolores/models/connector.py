@@ -1,5 +1,5 @@
 # from typing import final
-
+from dolores.const import consts
 from settings import DATABASE
 
 
@@ -12,7 +12,8 @@ class DatabaseConnector:
         return cls.instance
 
     def __init__(self):
-        self.__connect = DATABASE["DRIVER"](**DATABASE["CONFIG"])
+        consts.get_driver()
+        self.__connect = consts.get_driver()(**DATABASE["CONFIG"])
 
     @staticmethod
     def get_connection():

@@ -1,5 +1,16 @@
+from __future__ import annotations
 from dataclasses import dataclass
-from typing import List
+from typing import List, Dict
+
+
+@dataclass
+class VkAttachmentObjType:
+    attach_type: str
+    doc: Dict
+    photo: Dict
+    audio: Dict
+    video: Dict
+    wall: Dict
 
 
 @dataclass
@@ -7,24 +18,26 @@ class VkMessageType:
     date: int
     from_id: int
     message_id: int
-    out: int
     peer_id: int
     text: str
     conversation_message_id: int
-    fwd_messages: List
+    attachments: List[VkAttachmentObjType]
+    out: int
     important: bool
     random_id: int
-    attachments: List
+    fwd_messages: List[VkMessageType]
     is_hidden: bool
+    reply_message: VkMessageType
+    geo: Dict
 
 
 @dataclass
 class VkClientInfoType:
     button_actions: List[str]
     lang_id: int
-    keyboard: bool = None
-    inline_keyboard: bool = None
-    carousel: bool = None
+    keyboard: bool
+    inline_keyboard: bool
+    carousel: bool
 
 
 @dataclass

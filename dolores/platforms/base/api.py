@@ -1,5 +1,4 @@
 from __future__ import annotations
-import asyncio
 from abc import abstractmethod, ABCMeta
 from typing import Dict
 import aiohttp

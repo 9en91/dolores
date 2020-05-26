@@ -2,6 +2,8 @@ import asyncio
 from typing import Any
 
 import settings
+from dolores.const import consts
+from dolores.exceptions import NotSupportedPlatformException
 from dolores.platforms import PLATFORMS
 from dolores.platforms.telegram.bot import TgBot
 from dolores.platforms.vk.bot import VkBot
@@ -13,13 +15,14 @@ class RunCommand(AbstractCommand):
 
     async def handle(self, request: Any) -> None:
         if request == "run":
+            bot = None
             try:
-                if settings.PLATFORM == PLATFORMS.VK:
+                if consts.get_platform() == PLATFORMS.VK:
                     bot = VkBot()
-                elif settings.PLATFORM == PLATFORMS.TELEGRAM:
+                elif consts.get_platform() == PLATFORMS.TELEGRAM:
                     bot = TgBot()
                 else:
-                    raise Exception
+                    raise NotSupportedPlatformException
                 await bot.polling()
             finally:
                 await bot.api.close()

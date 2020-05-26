@@ -1,3 +1,3 @@
-from dolores.decorators.view import MessageHandler, ViewHandler
+from dolores.decorators.view import Controller
 from dolores.decorators.model import Entity
 

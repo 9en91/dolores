@@ -1,18 +1,19 @@
-from dolores.decorators import ViewHandler, MessageHandler
-from dolores.mixins import MessagesMixin
-from dolores.types import VkMessageType
+from dolores.decorators import Controller
+from dolores.platforms.enums.content import VkContent
+from dolores.platforms.vk.mixins.message import VkMessagesMixin
+from dolores.types.message_type import MessagesType
 from dolores.views import View
-from tools.state import State
+from dolores.states import BaseState
 
 
-@ViewHandler(state=State.START)
-class StartView(View, MessagesMixin):
+@Controller(state=BaseState.START,
+            event=MessagesType.USER,
+            content=[VkContent.text],
+            text="[Н,н]ачать")
+class StartView(View, VkMessagesMixin):
 
-    @MessageHandler(regex="[П,п]ривет")
-    async def hi(self, event: VkMessageType) -> None:
-        await self.send_message(self.user, "Привет")
-
-    @MessageHandler
-    async def other(self, event: VkMessageType) -> None:
-        await self.send_message(self.user, event.text)
+    async def handle(self, event, user, *args, **kwargs):
+        answer: str = "текс"
+        await self.send_message(user=user,
+                                text=answer)
 

@@ -1,23 +1,38 @@
 import os
-from dolores.platforms import PLATFORMS
-from dolores.utils.load_token import get_bot_token
-import peewee_async
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
-PLATFORM = PLATFORMS.VK
-TOKEN = get_bot_token(BASE_DIR)
+TOKEN = "dsgnofdsgjf876t6r236rfe56wfdtsasaygd6q232h738w"
 ID_BOT = 188183065
+
+USER = "dolores.models.BaseUserModel"
+STATE = "dolores.states.BaseState"
+
+MIDDLEWARE = [
+    "dolores.middleware.base.vk.VkHandleUpdateErrorMiddleware",
+    "dolores.middleware.base.vk.VkUpdateServerMiddleware",
+    "dolores.middleware.base.vk.VkMessageUpdateMiddleware",
+    "dolores.middleware.base.vk.VkCastEventMiddleware",
+    "dolores.middleware.base.vk.VkUserMiddleware",
+    "dolores.middleware.base.vk.VkIsNotBannedUserMiddleware",
+]
 
 DATABASE = {
     "CONFIG": {
-        "database": "postgres",
+        "database": "predict_db",
         "user": "postgres",
         "password": "root",
         "host": "localhost",
         "port": 5432,
     },
-    "DRIVER": peewee_async.PostgresqlDatabase
+    "DRIVER": "dolores.database.drivers.PostgresqlDatabase"
 }
 
-STATE = "tools.state.State"
+"""
+Supported platform:
+VK
+TELEGRAM
+DISCORD
+"""
+PLATFORM = "VK"

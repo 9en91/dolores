@@ -1,13 +1,8 @@
 from dolores.decorators import Entity
-from dolores.models import fields, BaseUserModel, Model
+from dolores.models import fields, Model
 
 
-@Entity.User
-class UserModel(BaseUserModel):
-    pass
-
-
-@Entity
-class ChatModel(Model):
-    user = fields.TextField()
+@Entity()
+class Table(Model):
+    name = fields.TextField(default="")
 
